@@ -49,7 +49,7 @@ int main()
     {
         c = len_dfs_pows(i, c+1);
         cout << i << " used " << c << " powers " << endl;
-        total += c;
+        total += c - 1;
     }
     cout << "the total was " << total << endl;
     return 0;
