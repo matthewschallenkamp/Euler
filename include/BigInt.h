@@ -15,9 +15,9 @@ class BigInt
         ~BigInt();
 
         long long digit_sum();
-
-        void multiply(const BigInt &a, const BigInt &b);
-        void add(const BigInt &a, const BigInt &b);
+        string to_string();
+        BigInt multiply(const BigInt &a, const BigInt &b);
+        BigInt add(const BigInt &a, const BigInt &b);
         friend ostream& operator<<(ostream &out, const BigInt &b);
         BigInt operator+(const BigInt &a) const;
         BigInt operator*(const BigInt &a) const;

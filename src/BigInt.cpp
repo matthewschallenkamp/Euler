@@ -49,7 +49,7 @@ BigInt::BigInt(string s)
     }
 }
 
-void BigInt::add(const BigInt &a, const BigInt &b)
+BigInt BigInt::add(const BigInt &a, const BigInt &b)
 {
     if(a.num == "0")
          *this = b;
@@ -79,9 +79,10 @@ void BigInt::add(const BigInt &a, const BigInt &b)
         if(carry)
             num.push_back('1');
     }
+    return *this;
 }
 
-void BigInt::multiply(const BigInt &a, const BigInt &b)
+BigInt BigInt::multiply(const BigInt &a, const BigInt &b)
 {
     if(a.num == "0")
          *this = 0;
@@ -121,6 +122,23 @@ void BigInt::multiply(const BigInt &a, const BigInt &b)
             }
         }
     }
+    return *this;
+}
+
+string rev(string s)
+{
+    string rs = s;
+    for(int i = 0; i < s.size(); i ++)
+    {
+        rs[i] = s[s.size() - i - 1];
+    }
+    return rs;
+}
+
+
+string BigInt::to_string()
+{
+    return rev(num);
 }
 
 BigInt BigInt::operator+(const BigInt &a) const
