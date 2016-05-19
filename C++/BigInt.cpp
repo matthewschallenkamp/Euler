@@ -180,6 +180,11 @@ long long BigInt::digit_sum()
     return ret;
 }
 
+int BigInt::log10()
+{
+    return num.size();
+}
+
 BigInt::~BigInt()
 {
     //dtor

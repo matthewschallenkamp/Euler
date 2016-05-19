@@ -23,6 +23,7 @@ class BigInt
         BigInt operator*(const BigInt &a) const;
         bool operator==(const BigInt &a) const;
         bool operator!=(const BigInt &a) const;
+        int log10();
     protected:
     private:
         bool positive;
