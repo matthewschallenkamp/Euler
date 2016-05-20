@@ -7,7 +7,7 @@ using namespace std;
 
 class BigInt
 {
-    public:
+public:
         BigInt();
         BigInt(long long a);
         BigInt(int a);
@@ -24,8 +24,8 @@ class BigInt
         bool operator==(const BigInt &a) const;
         bool operator!=(const BigInt &a) const;
         int log10();
-    protected:
-    private:
+protected:
+private:
         bool positive;
         string num;
 };

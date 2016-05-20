@@ -6,7 +6,6 @@
 #include <cmath>
 #include <bitset>
 #include <iomanip>
-#include "BigInt.h"
 
 
 using namespace std;
@@ -16,14 +15,13 @@ typedef unsigned long long ull;
 
 int main()
 {
-    ull total = 0;
-    for(long long n = 1; n <= 1073741824; n++)
-    {
-        if(!(n % 1000000))
-            cout << n << endl;
-        total += ((n xor 2*n xor 3*n) == 0);
-    }
-    cout << "the total was " << total;
-    return 0;
-}
+  ull total = 0;
 
+  for (long long n = 1; n <= 1073741824; n++)
+  {
+    //if (!(n % 1000000)) cout << n << endl;
+    total += ((n xor 2 * n xor 3 * n) == 0);
+  }
+  cout << "The total was " << total << "." << endl;
+  return 0;
+}

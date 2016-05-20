@@ -9,29 +9,35 @@ using namespace std;
 
 long long triangle(long long n)
 {
-    return n*(n+1)/2;
+  return n * (n + 1) / 2;
 }
 
 long long pentagonal(long long n)
 {
-    return n*(3*n - 1)/2;
+  return n * (3 * n - 1) / 2;
 }
 
 long long hexagonal(long long n)
 {
-    return n*(2*n - 1);
+  return n * (2 * n - 1);
 }
 
 int main()
 {
-    int hex_index = 0, pent_index = 0;
-    for(long long i = 286; i < 10000000; i++)
+  int hex_index = 0, pent_index = 0;
+
+  for (long long i = 286; 1; i++)
+  {
+    for (; hexagonal(hex_index) < triangle(i); hex_index++);
+
+    for (; pentagonal(pent_index) < triangle(i); pent_index++);
+
+    if ((hexagonal(hex_index) == pentagonal(pent_index)) &&
+        (triangle(i) == hexagonal(hex_index)))
     {
-        for(;hexagonal(hex_index) < triangle(i); hex_index++);
-        for(;pentagonal(pent_index) < triangle(i); pent_index++);
-        if(hexagonal(hex_index) == pentagonal(pent_index) &&
-           triangle(i) == hexagonal(hex_index))
-            cout << "The next hex/pentagonal triangle is " << triangle(i) << endl;
+      cout << "The next hex/penta/triangle is " << triangle(i) << endl;
+      break;
     }
-    return 0;
+  }
+  return 0;
 }
