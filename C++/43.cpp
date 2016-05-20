@@ -1,46 +1,84 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
-<CodeBlocks_project_file>
-	<FileVersion major="1" minor="6" />
-	<Project>
-		<Option title="Euler" />
-		<Option pch_mode="2" />
-		<Option compiler="gcc" />
-		<Build>
-			<Target title="Debug">
-				<Option output="bin/Debug/Euler" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Debug/" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="-g" />
-				</Compiler>
-				<Linker>
-					<Add library="gmp" />
-				</Linker>
-			</Target>
-			<Target title="Release">
-				<Option output="bin/Release/Euler" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Release/" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="-O2" />
-				</Compiler>
-				<Linker>
-					<Add option="-s" />
-				</Linker>
-			</Target>
-		</Build>
-		<Compiler>
-			<Add option="-Wall" />
-			<Add option="-fexceptions" />
-		</Compiler>
-		<Unit filename="main.cpp" />
-		<Extensions>
-			<code_completion />
-			<envvars />
-			<debugger />
-			<lib_finder disable_auto="1" />
-		</Extensions>
-	</Project>
-</CodeBlocks_project_file>
+#include <iostream>
+#include <fstream>
+#include <algorithm>
+#include <vector>
+#include <set>
+#include <bitset>
+
+using namespace std;
+
+bool checkdiv(const vector<int>& it, int div)
+{
+  int n   = it.size();
+  int num = 0;
+
+  num += it[n - 3];
+  num *= 10;
+  num += it[n - 2];
+  num *= 10;
+  num += it[n - 1];
+  return num % div == 0;
+}
+
+vector<vector<int> >children(vector<int>& parent)
+{
+  vector<vector<int> > ret;
+
+  for (int i = 0; i <= 9; i++)
+  {
+    if (find(parent.begin(), parent.end(), i) == parent.end())
+    {
+      parent.push_back(i);
+      ret.push_back(parent);
+      parent.pop_back();
+    }
+  }
+  return ret;
+}
+
+int main()
+{
+  long long sum = 0;
+
+  vector<vector<int> > newpossibles, possibles =
+  { { 1 }, { 2 }, { 3 }, { 4 }, { 5 }, { 6 }, { 7 }, { 8 }, { 9 } };
+  vector<int> div = { 1, 1, 1, 2, 3, 5, 7, 11, 13, 17 };
+
+  for (int i = 1; i < 3; i++)
+  {
+    for (auto& num : possibles)
+    {
+      for (auto& add : children(num))
+      {
+        newpossibles.push_back(add);
+      }
+    }
+    possibles.clear();
+    possibles.swap(newpossibles);
+  }
+
+  for (int i = 3; i <= 9; i++)
+  {
+    for (auto& num : possibles)
+    {
+      for (auto& add : children(num))
+      {
+        if (checkdiv(add, div[i])) newpossibles.push_back(add);
+      }
+    }
+    possibles.clear();
+    possibles.swap(newpossibles);
+  }
+
+  for (int i = 0; i < 10; i++)
+  {
+    sum *= 10;
+
+    for (auto num : possibles)
+    {
+      sum += num[i];
+    }
+  }
+  cout << "The sum was " << sum << "." << endl;
+  return sum;
+}
