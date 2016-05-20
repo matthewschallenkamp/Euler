@@ -12,10 +12,13 @@
 
 ;rewriting with no recursion
 (defun remove-divisibles (mylist divisor)
-  (if (= 0 (length mylist)) ()
-      (remove nil (cons (if (/= 0 (mod (car mylist) divisor))
-			    (car mylist))
-			(remove-divisibles (cdr mylist) divisor)))))
+  (if (= 0 (length mylist))
+      nil
+      (remove
+       nil
+       (cons (if (/= 0 (mod (car mylist) divisor))
+                 (car mylist))
+             (remove-divisibles (cdr mylist) divisor)))))
 
 (defun remove-divisibles-nor (mylist divisor)
   (let ((return-list nil))  
@@ -27,14 +30,14 @@
       (setf mylist (cdr mylist)))))
 
 (defun nth-item (n mylist)
-    (if (= n 1) 
-        (car mylist) 
-        (nth-item (1- n) (cdr mylist))))
+  (if (= n 1) 
+      (car mylist) 
+      (nth-item (1- n) (cdr mylist))))
 
 (defun nth-cdr (n mylist)
-    (if (= n 1) 
-        (cdr mylist) 
-        (nth-cdr (1- n) (cdr mylist))))
+  (if (= n 1) 
+      (cdr mylist) 
+      (nth-cdr (1- n) (cdr mylist))))
 
 (defun upto-nth (n mylist)
   (if (= n 0)

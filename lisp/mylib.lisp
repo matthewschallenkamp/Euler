@@ -1,9 +1,6 @@
-;;;this is a collection of all my functions and macros created during project euler
-
-;(load "W:\\programming\\Lisp\\mylib.lisp")
+;;;;this is a collection of all my functions and macros created during project euler
 
 ;;;list processing
-
 (defun rotate (list)
   (append (cdr list) (list (car list))))
 
@@ -12,45 +9,34 @@
 
 (defun list->digits (list)
   (let ((rlist (reverse list)) (power -1))
-    (reduce #'+ 
-            (loop 
-              for digit in rlist 
-              do (setf power (+ 1 power)) 
-              collect (* digit (expt 10 power))))))
+    (reduce
+     #'+ 
+     (loop 
+       for digit in rlist 
+       do (setf power (+ 1 power)) 
+       collect (* digit (expt 10 power))))))
 
 (defun last-item (mylist)
   (nth (length mylist) mylist))
 
 (defun is-in (item list)
   "returns true of the number is in the list"
-  (if (= 0 (length list)) nil
-      (if (equal item (car list)) t
+  (if (= 0 (length list))
+      nil
+      (if (equal item (car list))
+          t
           (is-in item (cdr list)))))
 
 (defun nth-cdr (n mylist)
-    (if (<= n 1) 
-        (cdr mylist) 
-        (nth-cdr (1- n) (cdr mylist))))
+  (if (<= n 1) 
+      (cdr mylist) 
+      (nth-cdr (1- n) (cdr mylist))))
 
 (defun upto-nth (n mylist)
   (if (= n 0)
-      ()
+      nil
       (cons (car mylist) 
             (upto-nth (1- n) (cdr mylist)))))
-
-(defun adds-possible (parts list)
-  "returns all of the possible additions made from parts parts from the numbers in the list"
-  (if (= 1 parts)
-      list
-      (let ((collector) (mylist list))
-        (loop
-          (if (> (length mylist) 1)
-              (setf collector
-                    (append (add-across (car mylist) 
-                                        (adds-possible (- parts 1) (cdr mylist)))
-                            collector))
-              (return (remove-duplicates collector)))
-          (setf mylist (cdr mylist))))))
 
 (defun add-across (number list)
   "adds number to each item of list"
@@ -60,23 +46,39 @@
       (setf rlist (cons (+ number (car list)) rlist))
       (setf list (cdr list)))))
 
+(defun adds-possible (parts list)
+  "returns all of the possible additions made from parts parts from the numbers in the list"
+  (if (= 1 parts)
+      list
+      (let ((collector) (mylist list))
+        (loop
+          (if (> (length mylist) 1)
+              (setf collector
+                    (append
+                     (add-across (car mylist) 
+                                 (adds-possible (- parts 1) (cdr mylist)))
+                     collector))
+              (return (remove-duplicates collector)))
+          (setf mylist (cdr mylist))))))
+
+
 ;;;primes and divisors
 
 (defun list-divisors (n)
   (let ((divisors))
     (loop for i from 1 to (- n 1)
-          do (when (= 0 (mod n i))
-               (setf divisors (cons i divisors)))
-          finally (return divisors))))
+          when (= 0 (mod n i))
+            do (setf divisors (cons i divisors))
+    finally (return divisors))))
 
 (defun sum-of-divisors (n)
   (let ((sum 0))
     (loop for i from 1 to (- n 1)
-          do (when (= 0 (mod n i))
-               (setf sum (+ i sum)))
+          when (= 0 (mod n i))
+            do (setf sum (+ i sum))
           finally (return sum))))
 
-(let ((primes)) (max 0)
+(let ((primes) (max 0))
   (defun is-prime-sieve (n)
     (when (> n max) 
         (setf max n)
@@ -145,21 +147,22 @@
 
 (defun prime-sieve (i)
   "returns a list of the prime numbers upto n, takes about 8 seconds for 1e5, 1140 for 1e6"
-  (remove nil 
-          (sieve-step 
-              (progn 
-                (if (= 0 (mod i 2)) (decf i))
-                (let ((mylist ()))
-                  (loop for n from i downto 3 by 2
-                        do (setf mylist (cons n mylist)))
-                  (append '(nil 2) mylist)))
-              3)))
+  (remove
+   nil 
+   (sieve-step 
+    (progn 
+      (if (= 0 (mod i 2)) (decf i))
+      (let ((mylist ()))
+        (loop for n from i downto 3 by 2
+              do (setf mylist (cons n mylist)))
+        (append '(nil 2) mylist)))
+    3)))
 
 ;;;number processing
 
 (defun digits (n)
   "returns how many digits there are in the number"
-  (length (digits->list (n))))
+  (length (digits->list n)))
 
 (defun factorial (n)
   "returns factorial of n"
@@ -207,7 +210,8 @@
 
 (defun fib (n)
   "returns the nth fiobonacci number"
-  (if (> 3 n) 1
+  (if (> 3 n)
+      1
       (let ((a 1) (b 1) (i 2))
         (loop
           (setf a (+ a b))

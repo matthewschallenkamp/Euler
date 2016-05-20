@@ -16,8 +16,8 @@
 
 (let ((x 1) (mylist nil) (limit 100))
   (loop
-     (if (> x limit) (return))
-     (setf mylist (cons x mylist))
-     (setf x (+ x 1)))
+    (if (> x limit) (return))
+    (setf mylist (cons x mylist))
+    (setf x (+ x 1)))
   (- (square-of-sum mylist) (sum-of-squares mylist)))
      

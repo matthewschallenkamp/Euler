@@ -14,7 +14,7 @@
 
 (let ((i 3))
   (loop until
-     (= 1000 (length (digits->list (fib i))))
-     do (setf i (+ 1 i))  
-     finally (return i)))
+        (= 1000 (length (digits->list (fib i))))
+        do (incf i)  
+        finally (return i)))
 

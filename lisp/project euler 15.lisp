@@ -7,26 +7,25 @@
 (defun find-grid (x y)
   (let ((grids *found-grids*))
     (loop
-       (if (= 0 (length grids))
-	   (return nil)
-	   ;x * y = y * x, so test for both
-	   (block both
-	     (if (or (and (= x (caar grids)) (= y (second (car grids))))
-		     (and (= x (second (car grids))) (= y (caar grids))))
-	       (return (third (car grids))))
-	     (setf grids (cdr grids)))))))
+      (if (= 0 (length grids))
+          (return nil)
+          (block both
+            (if (or (and (= x (caar grids)) (= y (second (car grids))))
+                    (and (= x (second (car grids))) (= y (caar grids))))
+                (return (third (car grids))))
+            (setf grids (cdr grids)))))))
 
 (defun find-paths (x y)
   (if (or (= 0 x) (= 0 y)) 
       1
-      (block find-it
+      (progn
 	(let ((found (find-grid x y)))
-	  (if found found
-	      (setf *found-grids* 
-		    (nconc  *found-grids* 
-			    (list (list x y 
-					(+ (find-paths (- x 1) y) 
-					   (find-paths x (- y 1))))))))
+	  (if found
+              found
+	      (push (list x y 
+                          (+ (find-paths (- x 1) y) 
+                             (find-paths x (- y 1))))
+                    *found-grids*))
 	  (find-grid x y)))))
 
 (find-paths 20 20)

@@ -104,7 +104,7 @@
 
 (let ((mynumbers *numbers*) (sum 0))
   (loop
-     (if (= 0 (length mynumbers))
-	 (return (car (list (floor (/ sum 1000000000000000000000000000000000000000000))))))
-     (setf sum (+ sum (car mynumbers)))
-     (setf mynumbers (cdr mynumbers))))
+    (if (= 0 (length mynumbers))
+        (return (car (list (floor (/ sum 1000000000000000000000000000000000000000000))))))
+    (setf sum (+ sum (car mynumbers)))
+    (setf mynumbers (cdr mynumbers))))

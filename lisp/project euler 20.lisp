@@ -1,10 +1,5 @@
 (defun factorial (n)
-  (let ((multiple 1))
-    (loop
-       (if (> 1 n)
-	   (return multiple))
-       (setf multiple (* multiple n))
-       (setf n (- n 1)))))
+  (reduce #'* (loop for i from n downto 1 collect i)))
 
 (defun digits->list (n) 
   (map 'list #'digit-char-p (prin1-to-string n)))

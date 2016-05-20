@@ -6,7 +6,7 @@
 ;I will maybe revisit this someday and rewrite it to be more efficient, but not today.
 
 (defun make-my-int-list (finish)
-   (cons 2 (loop for i = 3 then (+ 2 i) until (> i finish) collect i)))
+  (cons 2 (loop for i = 3 then (+ 2 i) until (> i finish) collect i)))
 
 ;rewriting as no recursion
 (defun remove-divisibles (mylist divisor)
@@ -25,18 +25,18 @@
       (setf mylist (cdr mylist)))))
 
 (defun nth-item (n mylist)
-    (if (= n 1) 
-        (car mylist) 
-        (nth-item (1- n) (cdr mylist))))
+  (if (= n 1) 
+      (car mylist) 
+      (nth-item (1- n) (cdr mylist))))
 
 (defun nth-cdr (n mylist)
-    (if (= n 1) 
-        (cdr mylist) 
-        (nth-cdr (1- n) (cdr mylist))))
+  (if (= n 1) 
+      (cdr mylist) 
+      (nth-cdr (1- n) (cdr mylist))))
 
 (defun upto-nth (n mylist)
   (if (= n 0)
-      ()
+      nil
       (cons (car mylist) 
 	    (upto-nth (1- n) (cdr mylist)))))
 
@@ -44,9 +44,11 @@
   (let ((dirt (make-my-int-list n)) (x 2))
     (loop
       (print (nth-item x dirt))
-      (setf dirt (nconc (upto-nth x dirt) 
-			(remove-divisibles-nor (nth-cdr x dirt) 
-					       (nth-item x dirt))))
+      (setf dirt
+            (nconc (upto-nth x dirt) 
+                   (remove-divisibles-nor
+                    (nth-cdr x dirt) 
+                    (nth-item x dirt))))
       (if (> x n) (return dirt))
       (if (> (expt (nth-item x dirt) 2) n) 
 	  (return dirt))
