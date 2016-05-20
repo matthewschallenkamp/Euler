@@ -6,11 +6,11 @@ using namespace std;
 
 int main()
 {
-    int total = 0;
-    for(int i = 1; i < 1000; i++)
-        if((i % 3 == 0) || (i % 5 == 0))
-            total += i;
-    cout << "there were " << total;
+  int total = 0;
 
-    return 0;
+  for (int i = 1; i < 1000; i++)
+    if ((i % 3 == 0) || (i % 5 == 0)) total += i;
+
+  cout << "The sum was " << total << "." << endl;
+  return total;
 }
